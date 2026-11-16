@@ -1,88 +1,275 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FULLCOM 2.1 — База ЭБУ</title>
+
+<title>FULLCOM 3.0 — База автомобильных ЭБУ</title>
 
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#090e18;color:#fff;font-family:Arial,sans-serif}
-header{background:#111b2d;padding:24px 15px;text-align:center;border-bottom:2px solid #1683ff}
-.logo{font-size:30px;font-weight:800;color:#399cff}
-.subtitle{color:#9aabc3;font-size:13px;margin-top:8px}
-main{max-width:850px;margin:auto;padding:16px}
-.card{background:#142035;border:1px solid #263b59;border-radius:16px;padding:20px;margin-bottom:18px}
-h2{font-size:19px;margin-top:0;color:#65adff}
-input,select,button{width:100%;padding:14px;margin-top:10px;border-radius:10px;font-size:16px}
-input,select{background:#0b1424;color:#fff;border:1px solid #385071}
-button{background:#1677ed;color:#fff;border:0;font-weight:bold;cursor:pointer}
-button:active{background:#0759bd}
-.result{margin-top:15px;padding:15px;background:#0b1424;border-radius:10px;line-height:1.7;color:#c9d8ed;white-space:pre-line;overflow-wrap:anywhere}
-.ecu-item{padding:14px;margin-top:12px;background:#15263f;border:1px solid #294669;border-radius:12px}
-.ecu-name{color:#65adff;font-weight:bold;font-size:18px}
-.label{color:#91a9c9}
-.warning{color:#ffcc80;font-size:13px;margin-top:10px}
-.photo-preview{width:100%;max-height:300px;object-fit:contain;margin-top:15px;border-radius:10px;display:none}
-.status{display:inline-block;padding:7px 12px;border-radius:20px;background:#123c70;color:#80bdff;font-size:12px;margin-top:12px}
-footer{text-align:center;padding:25px;color:#788ba5;font-size:12px}
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #090e18;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background: #111b2d;
+    padding: 25px 15px;
+    text-align: center;
+    border-bottom: 2px solid #1683ff;
+}
+
+.logo {
+    font-size: 32px;
+    font-weight: 800;
+    color: #399cff;
+}
+
+.subtitle {
+    color: #9aabc3;
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+.status {
+    display: inline-block;
+    padding: 8px 12px;
+    margin-top: 12px;
+    border-radius: 20px;
+    background: #123c70;
+    color: #80bdff;
+    font-size: 12px;
+}
+
+main {
+    max-width: 850px;
+    margin: auto;
+    padding: 16px;
+}
+
+.card {
+    background: #142035;
+    border: 1px solid #263b59;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 18px;
+}
+
+h2 {
+    font-size: 19px;
+    margin-top: 0;
+    color: #65adff;
+}
+
+input,
+select,
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+input,
+select {
+    background: #0b1424;
+    color: white;
+    border: 1px solid #385071;
+}
+
+button {
+    background: #1677ed;
+    color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:active {
+    background: #0759bd;
+}
+
+.result {
+    margin-top: 15px;
+    padding: 15px;
+    background: #0b1424;
+    border-radius: 10px;
+    line-height: 1.7;
+    color: #c9d8ed;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
+.ecu-item {
+    padding: 14px;
+    margin-top: 12px;
+    background: #15263f;
+    border: 1px solid #294669;
+    border-radius: 12px;
+}
+
+.ecu-name {
+    color: #65adff;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.label {
+    color: #91a9c9;
+}
+
+.warning {
+    color: #ffcc80;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+.success {
+    color: #7ee2a8;
+}
+
+.photo-preview {
+    width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+    margin-top: 15px;
+    border-radius: 10px;
+    display: none;
+}
+
+.small {
+    color: #91a9c9;
+    font-size: 13px;
+    margin-top: 10px;
+    line-height: 1.5;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #788ba5;
+    font-size: 12px;
+}
 </style>
+
 </head>
 
 <body>
 
 <header>
-<div class="logo">⚡ FULLCOM 2.1</div>
-<div class="subtitle">Профессиональный справочник автомобильных ЭБУ</div>
-<div class="status" id="dbStatus">Загрузка базы...</div>
+
+<div class="logo">⚡ FULLCOM 3.0</div>
+
+<div class="subtitle">
+Профессиональный справочник автомобильных ЭБУ
+</div>
+
+<div class="status" id="dbStatus">
+Загрузка данных...
+</div>
+
 </header>
 
 <main>
 
 <div class="card">
+
 <h2>🚗 Поиск ЭБУ по автомобилю</h2>
 
-<input id="brand" placeholder="Марка: LADA, Renault, BMW...">
-<input id="model" placeholder="Модель: Granta, Priora, Vesta...">
-<input id="year" type="number" placeholder="Год выпуска (необязательно)">
-<input id="engine" placeholder="Двигатель (необязательно)">
+<select id="brand" onchange="updateModels()">
+<option value="">Выберите марку автомобиля</option>
+</select>
 
-<button onclick="searchCar()">🔍 Найти ЭБУ</button>
+<select id="model">
+<option value="">Сначала выберите марку</option>
+</select>
+
+<input
+    id="year"
+    type="number"
+    min="1900"
+    max="2100"
+    placeholder="Год выпуска (необязательно)"
+>
+
+<input
+    id="engine"
+    placeholder="Двигатель (необязательно)"
+>
+
+<button onclick="searchCar()">
+🔍 Найти ЭБУ
+</button>
+
+<div class="small">
+Каталог моделей и база ЭБУ — разные наборы данных.
+Наличие автомобиля в списке не означает,
+что его ЭБУ уже внесён в справочник.
+</div>
 
 <div class="result" id="carResult">
-Введите марку и модель автомобиля.
+Выберите марку и модель автомобиля.
 </div>
+
 </div>
+
 
 <div class="card">
+
 <h2>🔧 Поиск по названию ЭБУ</h2>
 
-<input id="ecu" placeholder="Например: Bosch M7.9.7 или М86">
+<input
+    id="ecu"
+    placeholder="Например: Bosch M7.9.7 или М86"
+>
 
-<button onclick="searchECU()">🔍 Найти блок</button>
+<button onclick="searchECU()">
+🔍 Найти блок
+</button>
 
 <div class="result" id="ecuResult">
 Введите название или маркировку ЭБУ.
 </div>
+
 </div>
 
+
 <div class="card">
+
 <h2>🔌 Распиновки ЭБУ</h2>
 
-<input id="pinout" placeholder="Введите модель ЭБУ">
+<input
+    id="pinout"
+    placeholder="Введите модель ЭБУ"
+>
 
-<button onclick="searchPinout()">Найти распиновку</button>
+<button onclick="searchPinout()">
+Найти распиновку
+</button>
 
 <div class="result" id="pinoutResult">
 Поиск информации о подключении блока.
 </div>
+
 </div>
 
+
 <div class="card">
+
 <h2>💻 Инструкции по прошивке</h2>
 
 <select id="programmer">
+
 <option value="">Выберите загрузчик</option>
+
 <option>CombiLoader</option>
 <option>PCMFlash</option>
 <option>OpenBox</option>
@@ -91,23 +278,41 @@ footer{text-align:center;padding:25px;color:#788ba5;font-size:12px}
 <option>KESS</option>
 <option>Flex</option>
 <option>Autotuner</option>
+
 </select>
 
-<input id="instructionECU" placeholder="Модель ЭБУ">
+<input
+    id="instructionECU"
+    placeholder="Модель ЭБУ"
+>
 
-<button onclick="showInstructions()">Найти инструкцию</button>
+<button onclick="showInstructions()">
+Найти инструкцию
+</button>
 
 <div class="result" id="instructionResult">
 Выберите загрузчик и укажите ЭБУ.
 </div>
+
 </div>
 
+
 <div class="card">
+
 <h2>📸 Определение ЭБУ по фотографии</h2>
 
-<input type="file" id="photo" accept="image/*" onchange="loadPhoto(event)">
+<input
+    type="file"
+    id="photo"
+    accept="image/*"
+    onchange="loadPhoto(event)"
+>
 
-<img id="preview" class="photo-preview" alt="Фотография ЭБУ">
+<img
+    id="preview"
+    class="photo-preview"
+    alt="Фотография ЭБУ"
+>
 
 <div class="result" id="photoResult">
 Загрузите фотографию шильдика ЭБУ.
@@ -115,15 +320,31 @@ footer{text-align:center;padding:25px;color:#788ba5;font-size:12px}
 Пока доступен только просмотр фотографии.
 Автоматическое распознавание ещё не подключено.
 </div>
+
 </div>
 
+
 <div class="card">
+
+<h2>📊 Состояние базы FULLCOM</h2>
+
+<div class="result" id="statistics">
+Загрузка статистики...
+</div>
+
+</div>
+
+
+<div class="card">
+
 <h2>🔐 FULLCOM PRO</h2>
 
 <div class="result">
-Профессиональная база для специалистов по автомобильной электронике.
+Профессиональная база для специалистов
+по автомобильной электронике.
 
 Планируется:
+
 • Личный кабинет
 • Подписка на 30 дней
 • Проверенные распиновки
@@ -132,65 +353,301 @@ footer{text-align:center;padding:25px;color:#788ba5;font-size:12px}
 
 Система платного доступа пока не подключена.
 </div>
+
 </div>
 
 </main>
 
+
 <footer>
 FULLCOM © 2026<br>
 ECU Knowledge Database<br>
-Версия 2.1
+Версия 3.0
 </footer>
 
+
+<!-- БАЗА ЭБУ -->
+
 <script src="./ecu-database.js"></script>
-    <script src="./car-catalog.js"></script>
+
+
+<!-- КАТАЛОГ АВТОМОБИЛЕЙ -->
+
+<script src="./car-catalog.js"></script>
+
 
 <script>
+
 "use strict";
 
-function getDatabase(){
+
+// ==========================================
+// ПОЛУЧЕНИЕ ДАННЫХ
+// ==========================================
+
+function getDatabase() {
+
     return Array.isArray(window.FULLCOM_DATABASE)
         ? window.FULLCOM_DATABASE
         : [];
+
 }
 
-function normalize(value){
+function getCatalog() {
+
+    const catalog = window.FULLCOM_CAR_CATALOG;
+
+    return catalog && typeof catalog === "object"
+        ? catalog
+        : {};
+
+}
+
+
+// ==========================================
+// НОРМАЛИЗАЦИЯ
+// ==========================================
+
+function normalize(value) {
+
     return String(value || "")
         .toLowerCase()
-        .replace(/ё/g,"е")
-        .replace(/[\s.\-_]/g,"")
+        .replace(/ё/g, "е")
+        .replace(/[\s.\-_]/g, "")
         .trim();
+
 }
 
-function createLine(label,value){
-    const div=document.createElement("div");
-    const span=document.createElement("span");
-    span.className="label";
-    span.textContent=label+": ";
-    div.appendChild(span);
-    div.appendChild(document.createTextNode(String(value)));
-    return div;
+function normalizeBrand(value) {
+
+    const key = normalize(value);
+
+    const aliases = {
+
+        "лада": "lada",
+        "ваз": "lada",
+        "vaz": "lada",
+        "автоваз": "lada",
+
+        "форд": "ford",
+
+        "сузуки": "suzuki",
+
+        "киа": "kia",
+
+        "хендай": "hyundai",
+        "хундай": "hyundai",
+        "хендэ": "hyundai",
+
+        "хонда": "honda"
+
+    };
+
+    return aliases[key] || key;
+
 }
 
-function showRecords(element,records){
-    element.replaceChildren();
 
-    if(!records.length){
-        element.textContent="Совпадений в текущей базе не найдено.";
+// ==========================================
+// АЛИАСЫ МОДЕЛЕЙ
+// ==========================================
+
+function getModelAliases(model) {
+
+    const key = normalize(model);
+
+    const groups = [
+
+        ["приора", "priora", "2170", "2171", "2172"],
+
+        ["калина", "kalina"],
+
+        ["калина2", "kalina2"],
+
+        ["гранта", "granta", "2190", "2191"],
+
+        ["грантаfl", "grantafl"],
+
+        ["веста", "vesta"],
+
+        ["вестаsw", "vestasw"],
+
+        ["вестаcross", "vestacross"],
+
+        ["вестаng", "vestang"],
+
+        ["ларгус", "largus"],
+
+        ["ларгусcross", "larguscross"],
+
+        ["нива", "niva"],
+
+        ["нивалегенд", "nivalegend"],
+
+        ["ниватревел", "nivatravel"],
+
+        ["шевроленива", "chevroletniva"],
+
+        ["искра", "iskra"],
+
+        ["аура", "aura"]
+
+    ];
+
+    const group = groups.find(
+        item => item.includes(key)
+    );
+
+    return group || [key];
+
+}
+
+
+// ==========================================
+// ЗАПОЛНЕНИЕ МАРОК
+// ==========================================
+
+function initializeBrands() {
+
+    const select = document.getElementById("brand");
+
+    const catalog = getCatalog();
+
+    select.replaceChildren();
+
+    const placeholder = document.createElement("option");
+
+    placeholder.value = "";
+    placeholder.textContent = "Выберите марку автомобиля";
+
+    select.appendChild(placeholder);
+
+    const brands = Object.keys(catalog).sort();
+
+    brands.forEach(brand => {
+
+        const option = document.createElement("option");
+
+        option.value = brand;
+        option.textContent = brand;
+
+        select.appendChild(option);
+
+    });
+
+}
+
+
+// ==========================================
+// ОБНОВЛЕНИЕ МОДЕЛЕЙ
+// ==========================================
+
+function updateModels() {
+
+    const brand = document.getElementById("brand").value;
+
+    const modelSelect = document.getElementById("model");
+
+    const catalog = getCatalog();
+
+    modelSelect.replaceChildren();
+
+    const placeholder = document.createElement("option");
+
+    placeholder.value = "";
+
+    placeholder.textContent = brand
+        ? "Выберите модель"
+        : "Сначала выберите марку";
+
+    modelSelect.appendChild(placeholder);
+
+    if (!brand || !Array.isArray(catalog[brand])) {
         return;
     }
 
-    const count=document.createElement("div");
-    count.textContent="Найдено записей: "+records.length;
+    const models = [...new Set(catalog[brand])];
+
+    models.sort((a, b) =>
+        a.localeCompare(b, "ru", { numeric: true })
+    );
+
+    models.forEach(model => {
+
+        const option = document.createElement("option");
+
+        option.value = model;
+        option.textContent = model;
+
+        modelSelect.appendChild(option);
+
+    });
+
+}
+
+
+// ==========================================
+// СОЗДАНИЕ СТРОКИ
+// ==========================================
+
+function createLine(label, value) {
+
+    const div = document.createElement("div");
+
+    const span = document.createElement("span");
+
+    span.className = "label";
+
+    span.textContent = label + ": ";
+
+    div.appendChild(span);
+
+    div.appendChild(
+        document.createTextNode(String(value))
+    );
+
+    return div;
+
+}
+
+
+// ==========================================
+// ВЫВОД ЭБУ
+// ==========================================
+
+function showRecords(element, records) {
+
+    element.replaceChildren();
+
+    if (!records.length) {
+
+        element.textContent =
+            "Совпадений в текущей базе ЭБУ не найдено.";
+
+        return;
+
+    }
+
+    const count = document.createElement("div");
+
+    count.textContent =
+        "Найдено записей ЭБУ: " + records.length;
+
     element.appendChild(count);
 
-    records.forEach(item=>{
-        const card=document.createElement("div");
-        card.className="ecu-item";
+    records.forEach(item => {
 
-        const title=document.createElement("div");
-        title.className="ecu-name";
-        title.textContent=item.ecu || "ЭБУ без названия";
+        const card = document.createElement("div");
+
+        card.className = "ecu-item";
+
+        const title = document.createElement("div");
+
+        title.className = "ecu-name";
+
+        title.textContent =
+            item.ecu || "ЭБУ без названия";
+
         card.appendChild(title);
 
         card.appendChild(createLine(
@@ -216,10 +673,10 @@ function showRecords(element,records){
         ));
 
         card.appendChild(createLine(
-            "Возможные способы подключения",
+            "Указанные способы подключения",
             Array.isArray(item.connection)
                 ? item.connection.join(", ")
-                : "Не подтверждены"
+                : "Нет данных"
         ));
 
         card.appendChild(createLine(
@@ -236,170 +693,375 @@ function showRecords(element,records){
 
         card.appendChild(createLine(
             "Примечание",
-            item.instructions || "Нет инструкции"
+            item.instructions || "Нет данных"
         ));
 
-        const warning=document.createElement("div");
-        warning.className="warning";
-        warning.textContent=
-            "Справочные данные. Совместимость и подключение необходимо проверить по точному номеру и аппаратной версии ЭБУ.";
+        const warning = document.createElement("div");
+
+        warning.className = "warning";
+
+        warning.textContent =
+            "Предварительная справочная запись. " +
+            "Совместимость, протокол, процессор и " +
+            "подключение необходимо проверить " +
+            "по точному номеру и аппаратной версии ЭБУ.";
+
         card.appendChild(warning);
 
         element.appendChild(card);
+
     });
+
 }
 
-function searchCar(){
-    const brand=document.getElementById("brand").value.trim();
-    const model=document.getElementById("model").value.trim();
-    const result=document.getElementById("carResult");
 
-    if(!brand || !model){
-        result.textContent="Укажите марку и модель автомобиля.";
+// ==========================================
+// ПОИСК ПО АВТОМОБИЛЮ
+// ==========================================
+
+function searchCar() {
+
+    const brand = document.getElementById("brand").value;
+
+    const model = document.getElementById("model").value;
+
+    const year = document.getElementById("year").value.trim();
+
+    const engine = document.getElementById("engine").value.trim();
+
+    const result = document.getElementById("carResult");
+
+    if (!brand || !model) {
+
+        result.textContent =
+            "Выберите марку и модель автомобиля.";
+
         return;
+
     }
 
-    const b=normalize(brand);
-    const m=normalize(model);
+    const brandKey = normalizeBrand(brand);
 
-    const aliases={
-        "лада":"lada",
-        "ваз":"lada",
-        "vaz":"lada",
-        "volkswagen":"volkswagen",
-        "фольксваген":"volkswagen",
-        "бмв":"bmw",
-        "рено":"renault",
-        "шкода":"skoda",
-        "киа":"kia",
-        "хендай":"hyundai",
-        "хундай":"hyundai"
-    };
+    const modelAliases = getModelAliases(model);
 
-    const brandKey=aliases[b] || b;
+    const records = getDatabase().filter(item => {
 
-    const records=getDatabase().filter(item=>{
-        const itemBrand=normalize(item.brand);
-        const brandMatch=itemBrand===brandKey;
+        const itemBrand = normalizeBrand(item.brand);
 
-        const modelMatch=Array.isArray(item.models) &&
-            item.models.some(name=>normalize(name)===m);
+        const brandMatch = itemBrand === brandKey;
+
+        const modelMatch =
+            Array.isArray(item.models) &&
+            item.models.some(name => {
+
+                const aliases = getModelAliases(name);
+
+                return aliases.some(alias =>
+                    modelAliases.includes(alias)
+                );
+
+            });
 
         return brandMatch && modelMatch;
+
     });
 
-    showRecords(result,records);
+    result.replaceChildren();
+
+    const heading = document.createElement("div");
+
+    heading.className = "success";
+
+    heading.textContent =
+        "✓ Автомобиль найден в каталоге: " +
+        brand + " " + model;
+
+    result.appendChild(heading);
+
+    if (year || engine) {
+
+        const note = document.createElement("div");
+
+        note.className = "warning";
+
+        note.textContent =
+            "Год выпуска и двигатель пока не используются " +
+            "для фильтрации ЭБУ. Результаты нельзя считать " +
+            "подтверждёнными для этой комплектации.";
+
+        result.appendChild(note);
+
+    }
+
+    const container = document.createElement("div");
+
+    result.appendChild(container);
+
+    if (records.length) {
+
+        showRecords(container, records);
+
+    } else {
+
+        container.textContent =
+            "Модель есть в каталоге FULLCOM, " +
+            "но данные по её ЭБУ пока не добавлены.";
+
+    }
+
 }
 
-function searchECU(){
-    const query=normalize(document.getElementById("ecu").value);
-    const result=document.getElementById("ecuResult");
 
-    if(!query){
-        result.textContent="Введите название ЭБУ.";
-        return;
-    }
+// ==========================================
+// ПОИСК ПО НАЗВАНИЮ ЭБУ
+// ==========================================
 
-    const records=getDatabase().filter(item=>
-        normalize(item.ecu).includes(query)
+function searchECU() {
+
+    const query = normalize(
+        document.getElementById("ecu").value
     );
 
-    showRecords(result,records);
+    const result = document.getElementById("ecuResult");
+
+    if (!query) {
+
+        result.textContent = "Введите название ЭБУ.";
+
+        return;
+
+    }
+
+    const records = getDatabase().filter(item =>
+
+        normalize(item.ecu).includes(query)
+
+    );
+
+    showRecords(result, records);
+
 }
 
-function searchPinout(){
-    const query=normalize(document.getElementById("pinout").value);
-    const result=document.getElementById("pinoutResult");
 
-    if(!query){
-        result.textContent="Введите модель ЭБУ.";
-        return;
-    }
+// ==========================================
+// ПОИСК РАСПИНОВКИ
+// ==========================================
 
-    const records=getDatabase().filter(item=>
-        normalize(item.ecu).includes(query)
+function searchPinout() {
+
+    const query = normalize(
+        document.getElementById("pinout").value
     );
 
-    if(!records.length){
-        result.textContent="ЭБУ не найден в текущей базе.";
+    const result = document.getElementById("pinoutResult");
+
+    if (!query) {
+
+        result.textContent = "Введите модель ЭБУ.";
+
         return;
+
     }
 
-    showRecords(result,records);
+    const records = getDatabase().filter(item =>
 
-    const warning=document.createElement("div");
-    warning.className="warning";
-    warning.textContent=
-        "В базе пока нет подтверждённых таблиц контактов. Не используйте текстовые примечания вместо электрической схемы.";
+        normalize(item.ecu).includes(query)
+
+    );
+
+    showRecords(result, records);
+
+    const warning = document.createElement("div");
+
+    warning.className = "warning";
+
+    warning.textContent =
+        "Подтверждённые таблицы контактов " +
+        "пока не загружены. Не подключайте ЭБУ " +
+        "по неподтверждённым данным.";
+
     result.appendChild(warning);
+
 }
 
-function showInstructions(){
-    const programmer=document.getElementById("programmer").value;
-    const ecu=normalize(document.getElementById("instructionECU").value);
-    const result=document.getElementById("instructionResult");
 
-    if(!programmer || !ecu){
-        result.textContent="Выберите загрузчик и укажите модель ЭБУ.";
+// ==========================================
+// ПОИСК ПО ЗАГРУЗЧИКУ
+// ==========================================
+
+function showInstructions() {
+
+    const programmer =
+        document.getElementById("programmer").value;
+
+    const ecu = normalize(
+        document.getElementById("instructionECU").value
+    );
+
+    const result =
+        document.getElementById("instructionResult");
+
+    if (!programmer || !ecu) {
+
+        result.textContent =
+            "Выберите загрузчик и укажите модель ЭБУ.";
+
         return;
+
     }
 
-    const records=getDatabase().filter(item=>{
-        const ecuMatch=normalize(item.ecu).includes(ecu);
-        const toolMatch=Array.isArray(item.tools) &&
-            item.tools.some(tool=>normalize(tool)===normalize(programmer));
+    const records = getDatabase().filter(item => {
+
+        const ecuMatch =
+            normalize(item.ecu).includes(ecu);
+
+        const toolMatch =
+            Array.isArray(item.tools) &&
+            item.tools.some(tool =>
+                normalize(tool) === normalize(programmer)
+            );
 
         return ecuMatch && toolMatch;
+
     });
 
-    showRecords(result,records);
+    showRecords(result, records);
 
-    const warning=document.createElement("div");
-    warning.className="warning";
-    warning.textContent=
-        "Наличие загрузчика в справочной записи не подтверждает поддержку конкретной аппаратной версии. Пошаговые инструкции пока не добавлены.";
+    const warning = document.createElement("div");
+
+    warning.className = "warning";
+
+    warning.textContent =
+        "Совпадение с загрузчиком не подтверждает " +
+        "поддержку конкретной версии ЭБУ. " +
+        "Пошаговые инструкции пока не добавлены.";
+
     result.appendChild(warning);
+
 }
 
-function loadPhoto(event){
-    const file=event.target.files[0];
-    const preview=document.getElementById("preview");
-    const result=document.getElementById("photoResult");
 
-    if(!file)return;
+// ==========================================
+// ФОТОГРАФИЯ ЭБУ
+// ==========================================
 
-    if(!file.type.startsWith("image/")){
-        result.textContent="Выберите изображение.";
+function loadPhoto(event) {
+
+    const file = event.target.files[0];
+
+    const preview = document.getElementById("preview");
+
+    const result = document.getElementById("photoResult");
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+
+        result.textContent = "Выберите изображение.";
+
         return;
+
     }
 
-    const reader=new FileReader();
+    const reader = new FileReader();
 
-    reader.onload=function(e){
-        preview.src=e.target.result;
-        preview.style.display="block";
+    reader.onload = function(e) {
+
+        preview.src = e.target.result;
+
+        preview.style.display = "block";
+
     };
 
     reader.readAsDataURL(file);
 
-    result.textContent=
-        "Фотография загружена.\n\n"+
-        "Распознавание маркировки пока не реализовано.\n"+
+    result.textContent =
+        "Фотография загружена.\n\n" +
+        "Автоматическое распознавание маркировки " +
+        "пока не реализовано.\n" +
         "Изображение обрабатывается локально в браузере.";
+
 }
 
-function initializeDatabase(){
-    const database=getDatabase();
-    const status=document.getElementById("dbStatus");
 
-    if(database.length){
-        status.textContent="База подключена • "+database.length+" записей";
-    }else{
-        status.textContent="База не загружена";
+// ==========================================
+// СТАТИСТИКА
+// ==========================================
+
+function initializeStatistics() {
+
+    const database = getDatabase();
+
+    const catalog = getCatalog();
+
+    const brands = Object.keys(catalog);
+
+    const modelCount = brands.reduce((total, brand) => {
+
+        const models = catalog[brand];
+
+        return total + (
+            Array.isArray(models) ? models.length : 0
+        );
+
+    }, 0);
+
+    const status = document.getElementById("dbStatus");
+
+    const statistics =
+        document.getElementById("statistics");
+
+    const databaseLoaded =
+        Array.isArray(window.FULLCOM_DATABASE);
+
+    const catalogLoaded =
+        !!window.FULLCOM_CAR_CATALOG;
+
+    if (databaseLoaded && catalogLoaded) {
+
+        status.textContent =
+            "Каталог подключён • " +
+            brands.length + " марок";
+
+    } else {
+
+        status.textContent =
+            "Ошибка загрузки части данных";
+
     }
+
+    statistics.textContent =
+        "Марок в каталоге: " + brands.length + "\n" +
+        "Моделей в каталоге: " + modelCount + "\n" +
+        "Записей ЭБУ: " + database.length + "\n\n" +
+        "Каталог автомобилей: " +
+        (catalogLoaded ? "подключён" : "не загружен") +
+        "\n" +
+        "База ЭБУ: " +
+        (databaseLoaded ? "подключена" : "не загружена") +
+        "\n\n" +
+        "Количество записей не означает количество " +
+        "проверенных комбинаций автомобиля и ЭБУ.";
+
 }
 
-initializeDatabase();
+
+// ==========================================
+// ЗАПУСК FULLCOM
+// ==========================================
+
+function initializeFULLCOM() {
+
+    initializeBrands();
+
+    initializeStatistics();
+
+    console.log("FULLCOM 3.0 запущен");
+
+}
+
+initializeFULLCOM();
+
 </script>
 
 </body>
