@@ -3,434 +3,402 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FULLCOM 2.0 — Справочник ЭБУ</title>
+<title>FULLCOM 2.1 — База ЭБУ</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    background: #090e18;
-    color: #ffffff;
-    font-family: Arial, sans-serif;
-}
-
-header {
-    background: #111b2d;
-    padding: 25px 15px;
-    text-align: center;
-    border-bottom: 2px solid #1683ff;
-}
-
-.logo {
-    font-size: 30px;
-    font-weight: bold;
-    color: #399cff;
-}
-
-.subtitle {
-    color: #9aabc3;
-    font-size: 13px;
-    margin-top: 8px;
-}
-
-main {
-    max-width: 850px;
-    margin: auto;
-    padding: 16px;
-}
-
-.card {
-    background: #142035;
-    border: 1px solid #263b59;
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 18px;
-}
-
-h2 {
-    font-size: 19px;
-    margin-top: 0;
-    color: #65adff;
-}
-
-input, select, button {
-    width: 100%;
-    padding: 14px;
-    margin-top: 10px;
-    border-radius: 10px;
-    font-size: 16px;
-}
-
-input, select {
-    background: #0b1424;
-    color: white;
-    border: 1px solid #385071;
-}
-
-button {
-    background: #1677ed;
-    color: white;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-button:active {
-    background: #0759bd;
-}
-
-.result {
-    margin-top: 15px;
-    padding: 15px;
-    background: #0b1424;
-    border-radius: 10px;
-    line-height: 1.7;
-    color: #c9d8ed;
-    white-space: pre-line;
-}
-
-.badge {
-    display: inline-block;
-    background: #123c70;
-    color: #80bdff;
-    padding: 7px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    margin-top: 12px;
-}
-
-.photo-preview {
-    width: 100%;
-    max-height: 300px;
-    object-fit: contain;
-    margin-top: 15px;
-    border-radius: 10px;
-    display: none;
-}
-
-footer {
-    text-align: center;
-    padding: 25px;
-    color: #788ba5;
-    font-size: 12px;
-}
+*{box-sizing:border-box}
+body{margin:0;background:#090e18;color:#fff;font-family:Arial,sans-serif}
+header{background:#111b2d;padding:24px 15px;text-align:center;border-bottom:2px solid #1683ff}
+.logo{font-size:30px;font-weight:800;color:#399cff}
+.subtitle{color:#9aabc3;font-size:13px;margin-top:8px}
+main{max-width:850px;margin:auto;padding:16px}
+.card{background:#142035;border:1px solid #263b59;border-radius:16px;padding:20px;margin-bottom:18px}
+h2{font-size:19px;margin-top:0;color:#65adff}
+input,select,button{width:100%;padding:14px;margin-top:10px;border-radius:10px;font-size:16px}
+input,select{background:#0b1424;color:#fff;border:1px solid #385071}
+button{background:#1677ed;color:#fff;border:0;font-weight:bold;cursor:pointer}
+button:active{background:#0759bd}
+.result{margin-top:15px;padding:15px;background:#0b1424;border-radius:10px;line-height:1.7;color:#c9d8ed;white-space:pre-line;overflow-wrap:anywhere}
+.ecu-item{padding:14px;margin-top:12px;background:#15263f;border:1px solid #294669;border-radius:12px}
+.ecu-name{color:#65adff;font-weight:bold;font-size:18px}
+.label{color:#91a9c9}
+.warning{color:#ffcc80;font-size:13px;margin-top:10px}
+.photo-preview{width:100%;max-height:300px;object-fit:contain;margin-top:15px;border-radius:10px;display:none}
+.status{display:inline-block;padding:7px 12px;border-radius:20px;background:#123c70;color:#80bdff;font-size:12px;margin-top:12px}
+footer{text-align:center;padding:25px;color:#788ba5;font-size:12px}
 </style>
 </head>
 
 <body>
 
 <header>
-    <div class="logo">⚡ FULLCOM 2.0</div>
-    <div class="subtitle">
-        Профессиональный справочник автомобильных ЭБУ
-    </div>
-    <div class="badge">ECU DATABASE</div>
+<div class="logo">⚡ FULLCOM 2.1</div>
+<div class="subtitle">Профессиональный справочник автомобильных ЭБУ</div>
+<div class="status" id="dbStatus">Загрузка базы...</div>
 </header>
 
 <main>
 
 <div class="card">
-    <h2>🚗 Поиск ЭБУ по автомобилю</h2>
+<h2>🚗 Поиск ЭБУ по автомобилю</h2>
 
-    <input id="brand" placeholder="Марка автомобиля">
+<input id="brand" placeholder="Марка: LADA, Renault, BMW...">
+<input id="model" placeholder="Модель: Granta, Priora, Vesta...">
+<input id="year" type="number" placeholder="Год выпуска (необязательно)">
+<input id="engine" placeholder="Двигатель (необязательно)">
 
-    <input id="model" placeholder="Модель автомобиля">
+<button onclick="searchCar()">🔍 Найти ЭБУ</button>
 
-    <input id="year" type="number" placeholder="Год выпуска">
-
-    <input id="engine" placeholder="Двигатель (например 1.6 16V)">
-
-    <button onclick="searchCar()">
-        🔍 Найти ЭБУ
-    </button>
-
-    <div class="result" id="carResult">
-        Укажите данные автомобиля для поиска блока управления.
-    </div>
+<div class="result" id="carResult">
+Введите марку и модель автомобиля.
+</div>
 </div>
 
 <div class="card">
-    <h2>🔧 Поиск по номеру ЭБУ</h2>
+<h2>🔧 Поиск по названию ЭБУ</h2>
 
-    <input id="ecu" placeholder="Например: Bosch ME17.9.7">
+<input id="ecu" placeholder="Например: Bosch M7.9.7 или М86">
 
-    <button onclick="searchECU()">
-        🔍 Найти блок
-    </button>
+<button onclick="searchECU()">🔍 Найти блок</button>
 
-    <div class="result" id="ecuResult">
-        Введите модель или номер блока управления.
-    </div>
+<div class="result" id="ecuResult">
+Введите название или маркировку ЭБУ.
+</div>
 </div>
 
 <div class="card">
-    <h2>📸 Определение ЭБУ по фотографии</h2>
+<h2>🔌 Распиновки ЭБУ</h2>
 
-    <p>
-        Загрузите фотографию наклейки блока управления.
-    </p>
+<input id="pinout" placeholder="Введите модель ЭБУ">
 
-    <input
-        type="file"
-        id="photo"
-        accept="image/*"
-        onchange="loadPhoto(event)"
-    >
+<button onclick="searchPinout()">Найти распиновку</button>
 
-    <img id="preview" class="photo-preview" alt="Фото ЭБУ">
-
-    <div class="result" id="photoResult">
-        Выберите фотографию шильдика ЭБУ.
-
-        В текущей версии доступен просмотр фотографии.
-        Автоматическое распознавание добавим позже.
-    </div>
+<div class="result" id="pinoutResult">
+Поиск информации о подключении блока.
+</div>
 </div>
 
 <div class="card">
-    <h2>🔌 Распиновки ЭБУ</h2>
+<h2>💻 Инструкции по прошивке</h2>
 
-    <input
-        id="pinout"
-        placeholder="Введите модель ЭБУ"
-    >
+<select id="programmer">
+<option value="">Выберите загрузчик</option>
+<option>CombiLoader</option>
+<option>PCMFlash</option>
+<option>OpenBox</option>
+<option>BitBox</option>
+<option>KTAG</option>
+<option>KESS</option>
+<option>Flex</option>
+<option>Autotuner</option>
+</select>
 
-    <button onclick="searchPinout()">
-        Найти распиновку
-    </button>
+<input id="instructionECU" placeholder="Модель ЭБУ">
 
-    <div class="result" id="pinoutResult">
-        Здесь будут схемы подключения ЭБУ,
-        питание, масса, CAN, K-Line,
-        Boot и другие контакты.
+<button onclick="showInstructions()">Найти инструкцию</button>
 
-        Распиновки появятся после наполнения базы
-        проверенными схемами.
-    </div>
+<div class="result" id="instructionResult">
+Выберите загрузчик и укажите ЭБУ.
+</div>
 </div>
 
 <div class="card">
-    <h2>💻 Инструкции по прошивке</h2>
+<h2>📸 Определение ЭБУ по фотографии</h2>
 
-    <select id="programmer">
-        <option value="">Выберите загрузчик</option>
-        <option>CombiLoader</option>
-        <option>PCMFlash</option>
-        <option>OpenBox</option>
-        <option>BitBox</option>
-        <option>Scanmatik</option>
-        <option>KTAG</option>
-        <option>KESS</option>
-        <option>Autotuner</option>
-        <option>Flex</option>
-        <option>Другой загрузчик</option>
-    </select>
+<input type="file" id="photo" accept="image/*" onchange="loadPhoto(event)">
 
-    <button onclick="showInstructions()">
-        Показать инструкции
-    </button>
+<img id="preview" class="photo-preview" alt="Фотография ЭБУ">
 
-    <div class="result" id="instructionResult">
-        Выберите оборудование.
+<div class="result" id="photoResult">
+Загрузите фотографию шильдика ЭБУ.
 
-        После наполнения базы здесь будут
-        инструкции по чтению и записи ЭБУ,
-        подключению на столе и восстановлению.
-    </div>
+Пока доступен только просмотр фотографии.
+Автоматическое распознавание ещё не подключено.
+</div>
 </div>
 
 <div class="card">
-    <h2>🔐 Доступ к FULLCOM</h2>
+<h2>🔐 FULLCOM PRO</h2>
 
-    <div class="result">
-        FULLCOM — профессиональная база знаний
-        для специалистов по автомобильной электронике.
+<div class="result">
+Профессиональная база для специалистов по автомобильной электронике.
 
-        В дальнейшем здесь появятся:
+Планируется:
+• Личный кабинет
+• Подписка на 30 дней
+• Проверенные распиновки
+• Инструкции по чтению и записи
+• Расширенная база ЭБУ
 
-        • Регистрация пользователей
-        • Личный кабинет
-        • Подписка на 30 дней
-        • Управление доступом
-        • Расширенная база ЭБУ
-    </div>
-
-    <button onclick="subscriptionInfo()">
-        Информация о подписке
-    </button>
+Система платного доступа пока не подключена.
+</div>
 </div>
 
 </main>
 
 <footer>
-    FULLCOM © 2026
-    <br>
-    ECU Knowledge Database
-    <br>
-    Версия 2.0 — Демонстрационная
+FULLCOM © 2026<br>
+ECU Knowledge Database<br>
+Версия 2.1
 </footer>
 
+<script src="./ecu-database.js"></script>
+
 <script>
+"use strict";
 
-const ecuDatabase = [
-    {
-        brand: "lada",
-        model: "granta",
-        ecu: "Возможные ЭБУ: М74, М74CAN, М86",
-        info: "Точная модель зависит от двигателя, года выпуска и комплектации."
-    },
-    {
-        brand: "lada",
-        model: "vesta",
-        ecu: "Возможные ЭБУ: М86, М74.9",
-        info: "Необходимо проверить маркировку установленного блока."
-    },
-    {
-        brand: "ваз",
-        model: "2114",
-        ecu: "Возможные ЭБУ: Январь 7.2, Bosch M7.9.7, М73",
-        info: "Тип ЭБУ зависит от года выпуска и двигателя."
-    }
-];
+function getDatabase(){
+    return Array.isArray(window.FULLCOM_DATABASE)
+        ? window.FULLCOM_DATABASE
+        : [];
+}
 
-function searchCar() {
+function normalize(value){
+    return String(value || "")
+        .toLowerCase()
+        .replace(/ё/g,"е")
+        .replace(/[\s.\-_]/g,"")
+        .trim();
+}
 
-    const brand = document.getElementById("brand").value.trim();
-    const model = document.getElementById("model").value.trim();
-    const year = document.getElementById("year").value.trim();
-    const engine = document.getElementById("engine").value.trim();
+function createLine(label,value){
+    const div=document.createElement("div");
+    const span=document.createElement("span");
+    span.className="label";
+    span.textContent=label+": ";
+    div.appendChild(span);
+    div.appendChild(document.createTextNode(String(value)));
+    return div;
+}
 
-    const result = document.getElementById("carResult");
+function showRecords(element,records){
+    element.replaceChildren();
 
-    if (!brand || !model) {
-        result.textContent = "Укажите марку и модель автомобиля.";
+    if(!records.length){
+        element.textContent="Совпадений в текущей базе не найдено.";
         return;
     }
 
-    const car = ecuDatabase.find(item =>
-        item.brand === brand.toLowerCase() &&
-        item.model === model.toLowerCase()
+    const count=document.createElement("div");
+    count.textContent="Найдено записей: "+records.length;
+    element.appendChild(count);
+
+    records.forEach(item=>{
+        const card=document.createElement("div");
+        card.className="ecu-item";
+
+        const title=document.createElement("div");
+        title.className="ecu-name";
+        title.textContent=item.ecu || "ЭБУ без названия";
+        card.appendChild(title);
+
+        card.appendChild(createLine(
+            "Марка",
+            item.brand || "Не указана"
+        ));
+
+        card.appendChild(createLine(
+            "Модели",
+            Array.isArray(item.models)
+                ? item.models.join(", ")
+                : "Не указаны"
+        ));
+
+        card.appendChild(createLine(
+            "Производитель",
+            item.manufacturer || "Не указан"
+        ));
+
+        card.appendChild(createLine(
+            "Процессор",
+            item.processor || "Не подтверждён"
+        ));
+
+        card.appendChild(createLine(
+            "Возможные способы подключения",
+            Array.isArray(item.connection)
+                ? item.connection.join(", ")
+                : "Не подтверждены"
+        ));
+
+        card.appendChild(createLine(
+            "Указанные загрузчики",
+            Array.isArray(item.tools)
+                ? item.tools.join(", ")
+                : "Нет данных"
+        ));
+
+        card.appendChild(createLine(
+            "Распиновка",
+            item.pinout || "Не добавлена"
+        ));
+
+        card.appendChild(createLine(
+            "Примечание",
+            item.instructions || "Нет инструкции"
+        ));
+
+        const warning=document.createElement("div");
+        warning.className="warning";
+        warning.textContent=
+            "Справочные данные. Совместимость и подключение необходимо проверить по точному номеру и аппаратной версии ЭБУ.";
+        card.appendChild(warning);
+
+        element.appendChild(card);
+    });
+}
+
+function searchCar(){
+    const brand=document.getElementById("brand").value.trim();
+    const model=document.getElementById("model").value.trim();
+    const result=document.getElementById("carResult");
+
+    if(!brand || !model){
+        result.textContent="Укажите марку и модель автомобиля.";
+        return;
+    }
+
+    const b=normalize(brand);
+    const m=normalize(model);
+
+    const aliases={
+        "лада":"lada",
+        "ваз":"lada",
+        "vaz":"lada",
+        "volkswagen":"volkswagen",
+        "фольксваген":"volkswagen",
+        "бмв":"bmw",
+        "рено":"renault",
+        "шкода":"skoda",
+        "киа":"kia",
+        "хендай":"hyundai",
+        "хундай":"hyundai"
+    };
+
+    const brandKey=aliases[b] || b;
+
+    const records=getDatabase().filter(item=>{
+        const itemBrand=normalize(item.brand);
+        const brandMatch=itemBrand===brandKey;
+
+        const modelMatch=Array.isArray(item.models) &&
+            item.models.some(name=>normalize(name)===m);
+
+        return brandMatch && modelMatch;
+    });
+
+    showRecords(result,records);
+}
+
+function searchECU(){
+    const query=normalize(document.getElementById("ecu").value);
+    const result=document.getElementById("ecuResult");
+
+    if(!query){
+        result.textContent="Введите название ЭБУ.";
+        return;
+    }
+
+    const records=getDatabase().filter(item=>
+        normalize(item.ecu).includes(query)
     );
 
-    if (car) {
-        result.textContent =
-            "Автомобиль: " + brand + " " + model + "\n" +
-            "Год: " + (year || "Не указан") + "\n" +
-            "Двигатель: " + (engine || "Не указан") + "\n\n" +
-            car.ecu + "\n\n" +
-            car.info + "\n\n" +
-            "Для точного определения необходим номер ЭБУ.";
-    } else {
-        result.textContent =
-            "Автомобиль: " + brand + " " + model + "\n\n" +
-            "В демонстрационной базе пока нет данных.\n" +
-            "База будет расширяться.";
-    }
+    showRecords(result,records);
 }
 
-function searchECU() {
+function searchPinout(){
+    const query=normalize(document.getElementById("pinout").value);
+    const result=document.getElementById("pinoutResult");
 
-    const ecu = document.getElementById("ecu").value.trim();
-    const result = document.getElementById("ecuResult");
-
-    if (!ecu) {
-        result.textContent = "Введите маркировку ЭБУ.";
+    if(!query){
+        result.textContent="Введите модель ЭБУ.";
         return;
     }
 
-    result.textContent =
-        "Поиск: " + ecu + "\n\n" +
-        "Подробная карточка этого блока пока отсутствует.\n\n" +
-        "После наполнения базы здесь появятся:\n" +
-        "• Производитель и модель ЭБУ\n" +
-        "• Поддерживаемые автомобили\n" +
-        "• Процессор и память\n" +
-        "• Способы чтения и записи\n" +
-        "• Совместимые загрузчики\n" +
-        "• Распиновка\n" +
-        "• Инструкция подключения";
-}
+    const records=getDatabase().filter(item=>
+        normalize(item.ecu).includes(query)
+    );
 
-function loadPhoto(event) {
-
-    const file = event.target.files[0];
-    const preview = document.getElementById("preview");
-    const result = document.getElementById("photoResult");
-
-    if (!file) return;
-
-    if (!file.type.startsWith("image/")) {
-        result.textContent = "Выберите файл изображения.";
+    if(!records.length){
+        result.textContent="ЭБУ не найден в текущей базе.";
         return;
     }
 
-    const reader = new FileReader();
+    showRecords(result,records);
 
-    reader.onload = function(e) {
-        preview.src = e.target.result;
-        preview.style.display = "block";
+    const warning=document.createElement("div");
+    warning.className="warning";
+    warning.textContent=
+        "В базе пока нет подтверждённых таблиц контактов. Не используйте текстовые примечания вместо электрической схемы.";
+    result.appendChild(warning);
+}
+
+function showInstructions(){
+    const programmer=document.getElementById("programmer").value;
+    const ecu=normalize(document.getElementById("instructionECU").value);
+    const result=document.getElementById("instructionResult");
+
+    if(!programmer || !ecu){
+        result.textContent="Выберите загрузчик и укажите модель ЭБУ.";
+        return;
+    }
+
+    const records=getDatabase().filter(item=>{
+        const ecuMatch=normalize(item.ecu).includes(ecu);
+        const toolMatch=Array.isArray(item.tools) &&
+            item.tools.some(tool=>normalize(tool)===normalize(programmer));
+
+        return ecuMatch && toolMatch;
+    });
+
+    showRecords(result,records);
+
+    const warning=document.createElement("div");
+    warning.className="warning";
+    warning.textContent=
+        "Наличие загрузчика в справочной записи не подтверждает поддержку конкретной аппаратной версии. Пошаговые инструкции пока не добавлены.";
+    result.appendChild(warning);
+}
+
+function loadPhoto(event){
+    const file=event.target.files[0];
+    const preview=document.getElementById("preview");
+    const result=document.getElementById("photoResult");
+
+    if(!file)return;
+
+    if(!file.type.startsWith("image/")){
+        result.textContent="Выберите изображение.";
+        return;
+    }
+
+    const reader=new FileReader();
+
+    reader.onload=function(e){
+        preview.src=e.target.result;
+        preview.style.display="block";
     };
 
     reader.readAsDataURL(file);
 
-    result.textContent =
-        "Фотография загружена.\n\n" +
-        "Автоматическое определение ЭБУ пока недоступно.\n" +
-        "В этой версии фото не отправляется на сервер.";
+    result.textContent=
+        "Фотография загружена.\n\n"+
+        "Распознавание маркировки пока не реализовано.\n"+
+        "Изображение обрабатывается локально в браузере.";
 }
 
-function searchPinout() {
+function initializeDatabase(){
+    const database=getDatabase();
+    const status=document.getElementById("dbStatus");
 
-    const ecu = document.getElementById("pinout").value.trim();
-    const result = document.getElementById("pinoutResult");
-
-    if (!ecu) {
-        result.textContent = "Введите модель блока управления.";
-        return;
+    if(database.length){
+        status.textContent="База подключена • "+database.length+" записей";
+    }else{
+        status.textContent="База не загружена";
     }
-
-    result.textContent =
-        "ЭБУ: " + ecu + "\n\n" +
-        "Проверенная распиновка пока не добавлена.\n\n" +
-        "После наполнения базы будут доступны:\n" +
-        "• Питание +12V\n" +
-        "• Масса GND\n" +
-        "• CAN High / CAN Low\n" +
-        "• K-Line\n" +
-        "• Boot / GPT при наличии\n" +
-        "• Схема подключения на столе\n\n" +
-        "Не подключайте оборудование без проверки схемы.";
 }
 
-function showInstructions() {
-
-    const programmer = document.getElementById("programmer").value;
-    const result = document.getElementById("instructionResult");
-
-    if (!programmer) {
-        result.textContent = "Выберите загрузчик.";
-        return;
-    }
-
-    result.textContent =
-        "Оборудование: " + programmer + "\n\n" +
-        "Для получения инструкции необходимо выбрать конкретный ЭБУ.\n\n" +
-        "Инструкции по чтению, записи и восстановлению будут добавляться в базу.\n\n" +
-        "Перед записью необходимо проверить совместимость оборудования и сохранить оригинальную прошивку.";
-}
-
-function subscriptionInfo() {
-
-    alert(
-        "FULLCOM 2.0\n\n" +
-        "Система подписок находится в разработке.\n\n" +
-        "Платный доступ будет подключён после создания базы данных и системы авторизации."
-    );
-}
-
+initializeDatabase();
 </script>
 
 </body>
