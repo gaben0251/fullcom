@@ -818,7 +818,6 @@ function searchCar() {
 // ==========================================
 
 function searchECU() {
-
     const query = normalize(
         document.getElementById("ecu").value
     );
@@ -826,23 +825,77 @@ function searchECU() {
     const result = document.getElementById("ecuResult");
 
     if (!query) {
-
         result.textContent = "Введите название ЭБУ.";
-
         return;
-
     }
 
     const records = getDatabase().filter(item =>
-
         normalize(item.ecu).includes(query)
-
     );
 
     showRecords(result, records);
 
-}
+    const extra = Array.isArray(window.FULLCOM_ECU_EXTRA)
+        ? window.FULLCOM_ECU_EXTRA
+        : [];
 
+    const matches = [];
+
+    extra.forEach(item => {
+        if (!Array.isArray(item.families)) return;
+
+        item.families.forEach(family => {
+            if (normalize(family).includes(query)) {
+                matches.push({
+                    brand: item.brand,
+                    manufacturer: item.manufacturer,
+                    family: family
+                });
+            }
+        });
+    });
+
+    if (matches.length) {
+        const heading = document.createElement("div");
+        heading.className = "ecu-name";
+        heading.style.marginTop = "20px";
+        heading.textContent =
+            "Дополнительный справочник семейств ЭБУ";
+
+        result.appendChild(heading);
+
+        matches.forEach(item => {
+            const card = document.createElement("div");
+            card.className = "ecu-item";
+
+            card.appendChild(createLine(
+                "Семейство", item.family
+            ));
+
+            card.appendChild(createLine(
+                "Марка", item.brand
+            ));
+
+            card.appendChild(createLine(
+                "Производитель", item.manufacturer
+            ));
+
+            const warning = document.createElement("div");
+            warning.className = "warning";
+            warning.textContent =
+                "Справочное семейство. Совместимость с " +
+                "конкретным автомобилем не подтверждена.";
+
+            card.appendChild(warning);
+            result.appendChild(card);
+        });
+    }
+
+    if (!records.length && !matches.length) {
+        result.textContent =
+            "ЭБУ или семейство не найдены в текущей базе.";
+    }
+}
 
 // ==========================================
 // ПОИСК РАСПИНОВКИ
