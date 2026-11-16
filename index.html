@@ -1,56 +1,437 @@
+<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>fullcom</title>
+<title>FULLCOM 2.0 — Справочник ЭБУ</title>
+
 <style>
-* {box-sizing:border-box;}
-body {margin:0; font-family:Arial, sans-serif; background:#101114; color:#fff;}
-header {background:#1c1d22; padding:20px; text-align:center; font-size:22px; font-weight:bold; border-bottom:1px solid #333;}
-.chat {height:calc(100dvh - 150px); overflow-y:auto; padding:20px;}
-.message {padding:14px; margin-bottom:12px; border-radius:15px; max-width:85%; line-height:1.5; overflow-wrap:anywhere;}
-.bot {background:#292b33; margin-right:auto;}
-.user {background:#176b4d; margin-left:auto;}
-.input-area {position:fixed; bottom:0; width:100%; background:#1c1d22; padding:15px; display:flex; gap:10px;}
-input {flex:1; min-width:0; padding:14px; border-radius:12px; border:none; outline:none; font-size:16px;}
-button {background:#21a675; color:#fff; border:none; padding:14px; border-radius:12px; font-size:16px; cursor:pointer;}
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #090e18;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background: #111b2d;
+    padding: 25px 15px;
+    text-align: center;
+    border-bottom: 2px solid #1683ff;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+    color: #399cff;
+}
+
+.subtitle {
+    color: #9aabc3;
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+main {
+    max-width: 850px;
+    margin: auto;
+    padding: 16px;
+}
+
+.card {
+    background: #142035;
+    border: 1px solid #263b59;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 18px;
+}
+
+h2 {
+    font-size: 19px;
+    margin-top: 0;
+    color: #65adff;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+input, select {
+    background: #0b1424;
+    color: white;
+    border: 1px solid #385071;
+}
+
+button {
+    background: #1677ed;
+    color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:active {
+    background: #0759bd;
+}
+
+.result {
+    margin-top: 15px;
+    padding: 15px;
+    background: #0b1424;
+    border-radius: 10px;
+    line-height: 1.7;
+    color: #c9d8ed;
+    white-space: pre-line;
+}
+
+.badge {
+    display: inline-block;
+    background: #123c70;
+    color: #80bdff;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-top: 12px;
+}
+
+.photo-preview {
+    width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+    margin-top: 15px;
+    border-radius: 10px;
+    display: none;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #788ba5;
+    font-size: 12px;
+}
 </style>
 </head>
-<body>
-<header>fullcom</header>
-<div class="chat" id="chat">
-  <div class="message bot">
-    Приветствую, 😎 Сайт работает. Скоро все настроим </div>
-</div>
-<div class="input-area">
-  <input id="message" type="text" placeholder="Напиши сообщение...">
-  <button onclick="sendMessage()">➤</button>
-</div>
-<script>
-const input = document.getElementById('message');
-const chat = document.getElementById('chat');
 
-function addMessage(text, type) {
-  const div = document.createElement('div');
-  div.className = 'message ' + type;
-  div.textContent = text;
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
+<body>
+
+<header>
+    <div class="logo">⚡ FULLCOM 2.0</div>
+    <div class="subtitle">
+        Профессиональный справочник автомобильных ЭБУ
+    </div>
+    <div class="badge">ECU DATABASE</div>
+</header>
+
+<main>
+
+<div class="card">
+    <h2>🚗 Поиск ЭБУ по автомобилю</h2>
+
+    <input id="brand" placeholder="Марка автомобиля">
+
+    <input id="model" placeholder="Модель автомобиля">
+
+    <input id="year" type="number" placeholder="Год выпуска">
+
+    <input id="engine" placeholder="Двигатель (например 1.6 16V)">
+
+    <button onclick="searchCar()">
+        🔍 Найти ЭБУ
+    </button>
+
+    <div class="result" id="carResult">
+        Укажите данные автомобиля для поиска блока управления.
+    </div>
+</div>
+
+<div class="card">
+    <h2>🔧 Поиск по номеру ЭБУ</h2>
+
+    <input id="ecu" placeholder="Например: Bosch ME17.9.7">
+
+    <button onclick="searchECU()">
+        🔍 Найти блок
+    </button>
+
+    <div class="result" id="ecuResult">
+        Введите модель или номер блока управления.
+    </div>
+</div>
+
+<div class="card">
+    <h2>📸 Определение ЭБУ по фотографии</h2>
+
+    <p>
+        Загрузите фотографию наклейки блока управления.
+    </p>
+
+    <input
+        type="file"
+        id="photo"
+        accept="image/*"
+        onchange="loadPhoto(event)"
+    >
+
+    <img id="preview" class="photo-preview" alt="Фото ЭБУ">
+
+    <div class="result" id="photoResult">
+        Выберите фотографию шильдика ЭБУ.
+
+        В текущей версии доступен просмотр фотографии.
+        Автоматическое распознавание добавим позже.
+    </div>
+</div>
+
+<div class="card">
+    <h2>🔌 Распиновки ЭБУ</h2>
+
+    <input
+        id="pinout"
+        placeholder="Введите модель ЭБУ"
+    >
+
+    <button onclick="searchPinout()">
+        Найти распиновку
+    </button>
+
+    <div class="result" id="pinoutResult">
+        Здесь будут схемы подключения ЭБУ,
+        питание, масса, CAN, K-Line,
+        Boot и другие контакты.
+
+        Распиновки появятся после наполнения базы
+        проверенными схемами.
+    </div>
+</div>
+
+<div class="card">
+    <h2>💻 Инструкции по прошивке</h2>
+
+    <select id="programmer">
+        <option value="">Выберите загрузчик</option>
+        <option>CombiLoader</option>
+        <option>PCMFlash</option>
+        <option>OpenBox</option>
+        <option>BitBox</option>
+        <option>Scanmatik</option>
+        <option>KTAG</option>
+        <option>KESS</option>
+        <option>Autotuner</option>
+        <option>Flex</option>
+        <option>Другой загрузчик</option>
+    </select>
+
+    <button onclick="showInstructions()">
+        Показать инструкции
+    </button>
+
+    <div class="result" id="instructionResult">
+        Выберите оборудование.
+
+        После наполнения базы здесь будут
+        инструкции по чтению и записи ЭБУ,
+        подключению на столе и восстановлению.
+    </div>
+</div>
+
+<div class="card">
+    <h2>🔐 Доступ к FULLCOM</h2>
+
+    <div class="result">
+        FULLCOM — профессиональная база знаний
+        для специалистов по автомобильной электронике.
+
+        В дальнейшем здесь появятся:
+
+        • Регистрация пользователей
+        • Личный кабинет
+        • Подписка на 30 дней
+        • Управление доступом
+        • Расширенная база ЭБУ
+    </div>
+
+    <button onclick="subscriptionInfo()">
+        Информация о подписке
+    </button>
+</div>
+
+</main>
+
+<footer>
+    FULLCOM © 2026
+    <br>
+    ECU Knowledge Database
+    <br>
+    Версия 2.0 — Демонстрационная
+</footer>
+
+<script>
+
+const ecuDatabase = [
+    {
+        brand: "lada",
+        model: "granta",
+        ecu: "Возможные ЭБУ: М74, М74CAN, М86",
+        info: "Точная модель зависит от двигателя, года выпуска и комплектации."
+    },
+    {
+        brand: "lada",
+        model: "vesta",
+        ecu: "Возможные ЭБУ: М86, М74.9",
+        info: "Необходимо проверить маркировку установленного блока."
+    },
+    {
+        brand: "ваз",
+        model: "2114",
+        ecu: "Возможные ЭБУ: Январь 7.2, Bosch M7.9.7, М73",
+        info: "Тип ЭБУ зависит от года выпуска и двигателя."
+    }
+];
+
+function searchCar() {
+
+    const brand = document.getElementById("brand").value.trim();
+    const model = document.getElementById("model").value.trim();
+    const year = document.getElementById("year").value.trim();
+    const engine = document.getElementById("engine").value.trim();
+
+    const result = document.getElementById("carResult");
+
+    if (!brand || !model) {
+        result.textContent = "Укажите марку и модель автомобиля.";
+        return;
+    }
+
+    const car = ecuDatabase.find(item =>
+        item.brand === brand.toLowerCase() &&
+        item.model === model.toLowerCase()
+    );
+
+    if (car) {
+        result.textContent =
+            "Автомобиль: " + brand + " " + model + "\n" +
+            "Год: " + (year || "Не указан") + "\n" +
+            "Двигатель: " + (engine || "Не указан") + "\n\n" +
+            car.ecu + "\n\n" +
+            car.info + "\n\n" +
+            "Для точного определения необходим номер ЭБУ.";
+    } else {
+        result.textContent =
+            "Автомобиль: " + brand + " " + model + "\n\n" +
+            "В демонстрационной базе пока нет данных.\n" +
+            "База будет расширяться.";
+    }
 }
-function sendMessage() {
-  const text = input.value.trim();
-  if (!text) return;
-  addMessage(text, 'user');
-  input.value =  '';
-  setTimeout(() => {
-    addMessage('Братан, сообщение получил! 😎 Пока работаю в тестовом режиме, скоро подключим настоящие мозги.', 'bot');
-  }, 500);
+
+function searchECU() {
+
+    const ecu = document.getElementById("ecu").value.trim();
+    const result = document.getElementById("ecuResult");
+
+    if (!ecu) {
+        result.textContent = "Введите маркировку ЭБУ.";
+        return;
+    }
+
+    result.textContent =
+        "Поиск: " + ecu + "\n\n" +
+        "Подробная карточка этого блока пока отсутствует.\n\n" +
+        "После наполнения базы здесь появятся:\n" +
+        "• Производитель и модель ЭБУ\n" +
+        "• Поддерживаемые автомобили\n" +
+        "• Процессор и память\n" +
+        "• Способы чтения и записи\n" +
+        "• Совместимые загрузчики\n" +
+        "• Распиновка\n" +
+        "• Инструкция подключения";
 }
-input.addEventListener('keydown', function (event) {
-  if (event.key === 'Enter') {
-    sendMessage();
-  }
-});
+
+function loadPhoto(event) {
+
+    const file = event.target.files[0];
+    const preview = document.getElementById("preview");
+    const result = document.getElementById("photoResult");
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+        result.textContent = "Выберите файл изображения.";
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        preview.src = e.target.result;
+        preview.style.display = "block";
+    };
+
+    reader.readAsDataURL(file);
+
+    result.textContent =
+        "Фотография загружена.\n\n" +
+        "Автоматическое определение ЭБУ пока недоступно.\n" +
+        "В этой версии фото не отправляется на сервер.";
+}
+
+function searchPinout() {
+
+    const ecu = document.getElementById("pinout").value.trim();
+    const result = document.getElementById("pinoutResult");
+
+    if (!ecu) {
+        result.textContent = "Введите модель блока управления.";
+        return;
+    }
+
+    result.textContent =
+        "ЭБУ: " + ecu + "\n\n" +
+        "Проверенная распиновка пока не добавлена.\n\n" +
+        "После наполнения базы будут доступны:\n" +
+        "• Питание +12V\n" +
+        "• Масса GND\n" +
+        "• CAN High / CAN Low\n" +
+        "• K-Line\n" +
+        "• Boot / GPT при наличии\n" +
+        "• Схема подключения на столе\n\n" +
+        "Не подключайте оборудование без проверки схемы.";
+}
+
+function showInstructions() {
+
+    const programmer = document.getElementById("programmer").value;
+    const result = document.getElementById("instructionResult");
+
+    if (!programmer) {
+        result.textContent = "Выберите загрузчик.";
+        return;
+    }
+
+    result.textContent =
+        "Оборудование: " + programmer + "\n\n" +
+        "Для получения инструкции необходимо выбрать конкретный ЭБУ.\n\n" +
+        "Инструкции по чтению, записи и восстановлению будут добавляться в базу.\n\n" +
+        "Перед записью необходимо проверить совместимость оборудования и сохранить оригинальную прошивку.";
+}
+
+function subscriptionInfo() {
+
+    alert(
+        "FULLCOM 2.0\n\n" +
+        "Система подписок находится в разработке.\n\n" +
+        "Платный доступ будет подключён после создания базы данных и системы авторизации."
+    );
+}
+
 </script>
+
 </body>
-</html>`
+</html>
