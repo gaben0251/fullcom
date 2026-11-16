@@ -1,439 +1,447 @@
-// FULLCOM 2.0
-// ECU DATABASE
-// База автомобильных блоков управления
-// Версия 1.0
+// ==========================================
+// FULLCOM 2.2
+// ECU DATABASE — AVTOVAZ
+// ==========================================
 
 const ECU_DATABASE = [
 
-  // =========================
-  // LADA / ВАЗ
-  // =========================
+  // ========================================
+  // ВАЗ КЛАССИКА
+  // ========================================
 
   {
     brand: "LADA",
-    models: ["Granta", "Kalina", "Priora", "2110", "2112", "2114", "2115"],
-    ecu: "Январь 7.2",
-    manufacturer: "Итэлма / Автэл",
-    processor: "ST10",
-    connection: ["OBD", "Bench"],
-    tools: ["CombiLoader", "OpenBox"],
-    pinout: "Требуется проверка по аппаратной версии",
-    instructions: "Определить аппаратную версию ЭБУ перед чтением и записью."
-  },
-
-  {
-    brand: "LADA",
-    models: ["2110", "2112", "2114", "2115", "Kalina", "Priora"],
-    ecu: "Bosch M7.9.7",
+    models: ["2101", "2102", "2103", "2104", "2105", "2106", "2107"],
+    ecu: "Bosch M1.5.4",
     manufacturer: "Bosch",
-    processor: "ST10",
-    connection: ["OBD", "Bench"],
-    tools: ["CombiLoader"],
-    pinout: "Зависит от модификации блока",
-    instructions: "Проверить идентификаторы и совместимость загрузчика."
-  },
-
-  {
-    brand: "LADA",
-    models: ["Granta", "Kalina", "Priora", "2114"],
-    ecu: "М73",
-    manufacturer: "Итэлма / Автэл",
-    processor: "ST10",
-    connection: ["OBD", "Bench"],
-    tools: ["CombiLoader", "OpenBox"],
-    pinout: "Требуется уточнение аппаратной версии",
-    instructions: "Перед записью сохранить оригинальную прошивку."
-  },
-
-  {
-    brand: "LADA",
-    models: ["Granta", "Kalina", "Priora"],
-    ecu: "М74",
-    manufacturer: "Итэлма",
     processor: "Требуется уточнение",
-    connection: ["OBD", "Bench"],
-    tools: ["CombiLoader", "PCMFlash"],
-    pinout: "Требуется проверенная схема",
-    instructions: "Выбрать модуль по идентификаторам блока."
+    connection: ["Bench"],
+    tools: ["CombiLoader"],
+    pinout: "Не добавлена",
+    instructions: "Применяется на отдельных инжекторных модификациях. Проверить маркировку блока."
   },
 
   {
     brand: "LADA",
-    models: ["Granta", "Kalina"],
-    ecu: "М74CAN",
-    manufacturer: "Итэлма",
+    models: ["2104", "2105", "2107"],
+    ecu: "Январь 5.1",
+    manufacturer: "Автэл / Итэлма",
     processor: "Требуется уточнение",
-    connection: ["OBD", "Bench"],
+    connection: ["Bench"],
     tools: ["CombiLoader"],
-    pinout: "Требуется проверенная схема",
+    pinout: "Не добавлена",
     instructions: "Проверить аппаратную модификацию."
   },
 
   {
     brand: "LADA",
-    models: ["Vesta", "XRAY", "Granta"],
+    models: ["2104", "2105", "2107"],
+    ecu: "Bosch M7.9.7",
+    manufacturer: "Bosch",
+    processor: "ST10 (уточнить модификацию)",
+    connection: ["OBD", "Bench"],
+    tools: ["CombiLoader"],
+    pinout: "Не добавлена",
+    instructions: "Проверить идентификаторы ЭБУ."
+  },
+
+  // ========================================
+  // ВАЗ 2108–21099
+  // ========================================
+
+  {
+    brand: "LADA",
+    models: ["2108", "2109", "21099"],
+    ecu: "Январь 5.1",
+    manufacturer: "Автэл / Итэлма",
+    processor: "Требуется уточнение",
+    connection: ["Bench"],
+    tools: ["CombiLoader"],
+    pinout: "Не добавлена",
+    instructions: "Проверить номер блока."
+  },
+
+  {
+    brand: "LADA",
+    models: ["2108", "2109", "21099"],
+    ecu: "Bosch M1.5.4",
+    manufacturer: "Bosch",
+    processor: "Требуется уточнение",
+    connection: ["Bench"],
+    tools: ["CombiLoader"],
+    pinout: "Не добавлена",
+    instructions: "Уточнить модификацию ЭБУ."
+  },
+
+  // ========================================
+  // ВАЗ 2110–2112
+  // ========================================
+
+  {
+    brand: "LADA",
+    models: ["2110", "2111", "2112"],
+    ecu: "Январь 5.1",
+    manufacturer: "Автэл / Итэлма",
+    processor: "Требуется уточнение",
+    connection: ["Bench"],
+    tools: ["CombiLoader"],
+    pinout: "Не добавлена",
+    instructions: "Проверить аппаратную версию."
+  },
+
+  {
+    brand: "LADA",
+    models: ["2110", "2111", "2112"],
+    ecu: "Январь 7.2",
+    manufacturer: "Автэл / Итэлма",
+    processor: "ST10 (уточнить модификацию)",
+    connection: ["OBD", "Bench"],
+    tools: ["CombiLoader", "OpenBox"],
+    pinout: "Не добавлена",
+    instructions: "Сохранить оригинальную прошивку."
+  },
+
+  {
+    brand: "LADA",
+    models: ["2110", "2111", "2112"],
+    ecu: "Bosch M7.9.7",
+    manufacturer: "Bosch",
+    processor: "ST10 (уточнить модификацию)",
+    connection: ["OBD", "Bench"],
+    tools: ["CombiLoader"],
+    pinout: "Не добавлена",
+    instructions: "Проверить аппаратную версию."
+  },
+
+  // ========================================
+  // ВАЗ 2113–2115
+  // ========================================
+
+  {
+    brand: "LADA",
+    models: ["2113", "2114", "2115"],
+    ecu: "Январь 7.2",
+    manufacturer: "Автэл / Итэлма",
+    processor: "ST10 (уточнить модификацию)",
+    connection: ["OBD", "Bench"],
+    tools: ["CombiLoader", "OpenBox"],
+    pinout: "Не добавлена",
+    instructions: "Проверить идентификаторы."
+  },
+
+  {
+    brand: "LADA",
+    models: ["2113", "2114", "2115"],
+    ecu: "Bosch M7.9.7",
+    manufacturer: "Bosch",
+    processor: "ST10 (уточнить модификацию)",
+    connection: ["OBD", "Bench"],
+    tools: ["CombiLoader"],
+    pinout: "Не добавлена",
+    instructions: "Проверить номер блока."
+  },
+
+  {
+    brand: "LADA",
+    models: ["2113", "2114", "2115"],
+    ecu: "М73",
+    manufacturer: "Автэл / Итэлма",
+    processor: "Требуется уточнение",
+    connection: ["OBD", "Bench"],
+    tools: ["CombiLoader", "OpenBox"],
+    pinout: "Не добавлена",
+    instructions: "Проверить модификацию."
+  },
+
+  // ========================================
+  // LADA PRIORA
+  // ========================================
+
+  {
+    brand: "LADA",
+    models: ["Priora", "2170", "2171", "2172"],
+    ecu: "Bosch M7.9.7",
+    manufacturer: "Bosch",
+    processor: "ST10 (уточнить модификацию)",
+    connection: ["OBD", "Bench"],
+    tools: ["CombiLoader"],
+    pinout: "Не добавлена",
+    instructions: "Проверить маркировку."
+  },
+
+  {
+    brand: "LADA",
+    models: ["Priora", "2170", "2171", "2172"],
+    ecu: "М73",
+    manufacturer: "Автэл / Итэлма",
+    processor: "Требуется уточнение",
+    connection: ["OBD", "Bench"],
+    tools: ["CombiLoader"],
+    pinout: "Не добавлена",
+    instructions: "Проверить аппаратную версию."
+  },
+
+  {
+    brand: "LADA",
+    models: ["Priora", "2170", "2171", "2172"],
+    ecu: "М74",
+    manufacturer: "Итэлма",
+    processor: "Требуется уточнение",
+    connection: ["OBD", "Bench"],
+    tools: ["CombiLoader", "PCMFlash"],
+    pinout: "Не добавлена",
+    instructions: "Проверить идентификаторы ЭБУ."
+  },
+
+  {
+    brand: "LADA",
+    models: ["Priora", "2170", "2171", "2172"],
+    ecu: "М75",
+    manufacturer: "Итэлма",
+    processor: "Требуется уточнение",
+    connection: ["OBD", "Bench"],
+    tools: ["CombiLoader"],
+    pinout: "Не добавлена",
+    instructions: "Уточнить аппаратную модификацию."
+  },
+
+  // ========================================
+  // LADA KALINA
+  // ========================================
+
+  {
+    brand: "LADA",
+    models: ["Kalina", "1117", "1118", "1119"],
+    ecu: "Январь 7.2",
+    manufacturer: "Автэл / Итэлма",
+    processor: "ST10 (уточнить модификацию)",
+    connection: ["OBD", "Bench"],
+    tools: ["CombiLoader"],
+    pinout: "Не добавлена",
+    instructions: "Проверить номер блока."
+  },
+
+  {
+    brand: "LADA",
+    models: ["Kalina", "1117", "1118", "1119"],
+    ecu: "М73",
+    manufacturer: "Автэл / Итэлма",
+    processor: "Требуется уточнение",
+    connection: ["OBD", "Bench"],
+    tools: ["CombiLoader"],
+    pinout: "Не добавлена",
+    instructions: "Проверить модификацию."
+  },
+
+  {
+    brand: "LADA",
+    models: ["Kalina", "Kalina 2"],
+    ecu: "М74",
+    manufacturer: "Итэлма",
+    processor: "Требуется уточнение",
+    connection: ["OBD", "Bench"],
+    tools: ["CombiLoader", "PCMFlash"],
+    pinout: "Не добавлена",
+    instructions: "Проверить аппаратную версию."
+  },
+
+  {
+    brand: "LADA",
+    models: ["Kalina 2"],
+    ecu: "М74CAN",
+    manufacturer: "Итэлма",
+    processor: "Требуется уточнение",
+    connection: ["OBD", "Bench"],
+    tools: ["CombiLoader"],
+    pinout: "Не добавлена",
+    instructions: "Проверить номер блока."
+  },
+
+  // ========================================
+  // LADA GRANTA
+  // ========================================
+
+  {
+    brand: "LADA",
+    models: ["Granta", "2190", "2191"],
+    ecu: "М74",
+    manufacturer: "Итэлма",
+    processor: "Требуется уточнение",
+    connection: ["OBD", "Bench"],
+    tools: ["CombiLoader", "PCMFlash"],
+    pinout: "Не добавлена",
+    instructions: "Проверить модификацию."
+  },
+
+  {
+    brand: "LADA",
+    models: ["Granta", "2190", "2191"],
+    ecu: "М74CAN",
+    manufacturer: "Итэлма",
+    processor: "Требуется уточнение",
+    connection: ["OBD", "Bench"],
+    tools: ["CombiLoader"],
+    pinout: "Не добавлена",
+    instructions: "Проверить аппаратную версию."
+  },
+
+  {
+    brand: "LADA",
+    models: ["Granta", "2190", "2191"],
     ecu: "М86",
     manufacturer: "Итэлма",
     processor: "Требуется уточнение",
     connection: ["OBD", "Bench"],
     tools: ["CombiLoader", "PCMFlash"],
-    pinout: "Зависит от версии ЭБУ",
-    instructions: "Проверить поддержку конкретной модификации."
+    pinout: "Не добавлена",
+    instructions: "Проверить идентификаторы."
   },
 
   {
     brand: "LADA",
-    models: ["Vesta", "Granta"],
+    models: ["Granta"],
     ecu: "М74.9",
     manufacturer: "Итэлма",
     processor: "Требуется уточнение",
     connection: ["OBD", "Bench"],
     tools: ["CombiLoader"],
     pinout: "Не добавлена",
-    instructions: "Необходимо уточнить аппаратную версию."
+    instructions: "Проверить номер ЭБУ."
   },
 
-  // =========================
-  // RENAULT
-  // =========================
+  // ========================================
+  // LADA VESTA
+  // ========================================
 
   {
-    brand: "Renault",
-    models: ["Logan", "Sandero", "Duster", "Largus"],
+    brand: "LADA",
+    models: ["Vesta", "Vesta SW", "Vesta Cross"],
+    ecu: "М86",
+    manufacturer: "Итэлма",
+    processor: "Требуется уточнение",
+    connection: ["OBD", "Bench"],
+    tools: ["CombiLoader", "PCMFlash"],
+    pinout: "Не добавлена",
+    instructions: "Проверить аппаратную модификацию."
+  },
+
+  {
+    brand: "LADA",
+    models: ["Vesta", "Vesta NG"],
+    ecu: "М74.9",
+    manufacturer: "Итэлма",
+    processor: "Требуется уточнение",
+    connection: ["OBD", "Bench"],
+    tools: ["CombiLoader"],
+    pinout: "Не добавлена",
+    instructions: "Проверить совместимость загрузчика."
+  },
+
+  // ========================================
+  // LADA XRAY
+  // ========================================
+
+  {
+    brand: "LADA",
+    models: ["XRAY", "XRAY Cross"],
+    ecu: "М86",
+    manufacturer: "Итэлма",
+    processor: "Требуется уточнение",
+    connection: ["OBD", "Bench"],
+    tools: ["CombiLoader", "PCMFlash"],
+    pinout: "Не добавлена",
+    instructions: "Проверить номер блока."
+  },
+
+  // ========================================
+  // LADA LARGUS
+  // ========================================
+
+  {
+    brand: "LADA",
+    models: ["Largus", "Largus Cross"],
     ecu: "Siemens EMS3132",
     manufacturer: "Siemens",
     processor: "Требуется уточнение",
     connection: ["OBD", "Bench"],
     tools: ["CombiLoader", "PCMFlash"],
     pinout: "Не добавлена",
-    instructions: "Проверить идентификаторы ЭБУ."
+    instructions: "Проверить двигатель и аппаратную версию."
   },
 
   {
-    brand: "Renault",
-    models: ["Logan", "Sandero", "Duster"],
-    ecu: "Continental EMS3120",
-    manufacturer: "Continental",
+    brand: "LADA",
+    models: ["Largus", "Largus Cross"],
+    ecu: "М86",
+    manufacturer: "Итэлма",
     processor: "Требуется уточнение",
-    connection: ["OBD", "Bench"],
-    tools: ["PCMFlash"],
-    pinout: "Не добавлена",
-    instructions: "Проверить поддержку загрузчиком."
-  },
-
-  {
-    brand: "Renault",
-    models: ["Megane", "Fluence", "Duster"],
-    ecu: "Continental EMS3155",
-    manufacturer: "Continental",
-    processor: "Требуется уточнение",
-    connection: ["OBD", "Bench"],
-    tools: ["PCMFlash"],
-    pinout: "Не добавлена",
-    instructions: "Уточнить версию аппаратного обеспечения."
-  },
-
-  // =========================
-  // HYUNDAI / KIA
-  // =========================
-
-  {
-    brand: "Hyundai",
-    models: ["Solaris", "Elantra", "Creta", "Accent"],
-    ecu: "Bosch ME17.9.11",
-    manufacturer: "Bosch",
-    processor: "Infineon TriCore",
-    connection: ["OBD", "Bench", "Boot"],
-    tools: ["PCMFlash", "CombiLoader"],
-    pinout: "Требуется схема конкретной модификации",
-    instructions: "Проверить версию блока и протокол."
-  },
-
-  {
-    brand: "Kia",
-    models: ["Rio", "Ceed", "Cerato", "Sportage"],
-    ecu: "Bosch ME17.9.11",
-    manufacturer: "Bosch",
-    processor: "Infineon TriCore",
-    connection: ["OBD", "Bench", "Boot"],
-    tools: ["PCMFlash", "CombiLoader"],
-    pinout: "Не добавлена",
-    instructions: "Проверить идентификаторы и совместимость."
-  },
-
-  {
-    brand: "Hyundai",
-    models: ["Solaris", "Elantra", "Creta"],
-    ecu: "Kefico CPEGD2",
-    manufacturer: "Kefico",
-    processor: "Требуется уточнение",
-    connection: ["OBD", "Bench"],
-    tools: ["PCMFlash"],
-    pinout: "Не добавлена",
-    instructions: "Уточнить аппаратную модификацию."
-  },
-
-  {
-    brand: "Kia",
-    models: ["Rio", "Ceed", "Cerato"],
-    ecu: "Kefico CPEGD2",
-    manufacturer: "Kefico",
-    processor: "Требуется уточнение",
-    connection: ["OBD", "Bench"],
-    tools: ["PCMFlash"],
-    pinout: "Не добавлена",
-    instructions: "Проверить совместимость оборудования."
-  },
-
-  // =========================
-  // FORD
-  // =========================
-
-  {
-    brand: "Ford",
-    models: ["Focus", "Mondeo", "Fiesta"],
-    ecu: "Bosch MED17",
-    manufacturer: "Bosch",
-    processor: "Infineon TriCore",
-    connection: ["OBD", "Bench", "Boot"],
-    tools: ["PCMFlash", "CombiLoader"],
-    pinout: "Зависит от конкретного блока",
-    instructions: "Уточнить точную модификацию MED17."
-  },
-
-  {
-    brand: "Ford",
-    models: ["Focus", "Mondeo", "Kuga"],
-    ecu: "Continental EMS",
-    manufacturer: "Continental",
-    processor: "Требуется уточнение",
-    connection: ["OBD", "Bench"],
-    tools: ["PCMFlash"],
-    pinout: "Не добавлена",
-    instructions: "Определить точную модель ЭБУ."
-  },
-
-  // =========================
-  // VOLKSWAGEN / AUDI / SKODA
-  // =========================
-
-  {
-    brand: "Volkswagen",
-    models: ["Polo", "Golf", "Passat", "Tiguan"],
-    ecu: "Bosch MED17",
-    manufacturer: "Bosch",
-    processor: "Infineon TriCore",
-    connection: ["OBD", "Bench", "Boot"],
-    tools: ["PCMFlash", "CombiLoader"],
-    pinout: "Требуется уточнение",
-    instructions: "Определить модификацию MED17."
-  },
-
-  {
-    brand: "Audi",
-    models: ["A3", "A4", "A5", "A6", "Q5"],
-    ecu: "Bosch MED17",
-    manufacturer: "Bosch",
-    processor: "Infineon TriCore",
-    connection: ["OBD", "Bench", "Boot"],
-    tools: ["PCMFlash", "CombiLoader"],
-    pinout: "Не добавлена",
-    instructions: "Проверить аппаратную версию."
-  },
-
-  {
-    brand: "Skoda",
-    models: ["Octavia", "Rapid", "Superb", "Yeti"],
-    ecu: "Bosch MED17",
-    manufacturer: "Bosch",
-    processor: "Infineon TriCore",
-    connection: ["OBD", "Bench", "Boot"],
-    tools: ["PCMFlash", "CombiLoader"],
-    pinout: "Не добавлена",
-    instructions: "Проверить точную модель ЭБУ."
-  },
-
-  // =========================
-  // BMW
-  // =========================
-
-  {
-    brand: "BMW",
-    models: ["1 Series", "3 Series", "5 Series", "X1", "X3", "X5"],
-    ecu: "Bosch MEVD17",
-    manufacturer: "Bosch",
-    processor: "Infineon TriCore",
-    connection: ["OBD", "Bench", "Boot"],
-    tools: ["PCMFlash", "Flex", "Autotuner"],
-    pinout: "Зависит от модификации",
-    instructions: "Определить точный номер блока."
-  },
-
-  // =========================
-  // MERCEDES-BENZ
-  // =========================
-
-  {
-    brand: "Mercedes-Benz",
-    models: ["C-Class", "E-Class", "GLK", "GLC"],
-    ecu: "Bosch MED17",
-    manufacturer: "Bosch",
-    processor: "Infineon TriCore",
-    connection: ["OBD", "Bench", "Boot"],
-    tools: ["PCMFlash", "Flex", "Autotuner"],
-    pinout: "Не добавлена",
-    instructions: "Уточнить аппаратную модификацию."
-  },
-
-  // =========================
-  // TOYOTA / LEXUS
-  // =========================
-
-  {
-    brand: "Toyota",
-    models: ["Corolla", "Camry", "RAV4", "Land Cruiser"],
-    ecu: "Denso",
-    manufacturer: "Denso",
-    processor: "Зависит от модели",
-    connection: ["OBD", "Bench"],
-    tools: ["PCMFlash"],
-    pinout: "Требуется точный номер ЭБУ",
-    instructions: "Определить номер блока Denso."
-  },
-
-  {
-    brand: "Lexus",
-    models: ["IS", "ES", "GS", "RX", "NX"],
-    ecu: "Denso",
-    manufacturer: "Denso",
-    processor: "Зависит от модели",
-    connection: ["OBD", "Bench"],
-    tools: ["PCMFlash"],
-    pinout: "Не добавлена",
-    instructions: "Определить точную модель ЭБУ."
-  },
-
-  // =========================
-  // NISSAN
-  // =========================
-
-  {
-    brand: "Nissan",
-    models: ["Almera", "Qashqai", "X-Trail", "Teana"],
-    ecu: "Hitachi",
-    manufacturer: "Hitachi",
-    processor: "Зависит от модели",
-    connection: ["OBD", "Bench"],
-    tools: ["PCMFlash"],
-    pinout: "Не добавлена",
-    instructions: "Проверить номер и тип ЭБУ."
-  },
-
-  // =========================
-  // MITSUBISHI
-  // =========================
-
-  {
-    brand: "Mitsubishi",
-    models: ["Lancer", "Outlander", "ASX", "Pajero"],
-    ecu: "Mitsubishi Electric",
-    manufacturer: "Mitsubishi Electric",
-    processor: "Зависит от модели",
-    connection: ["OBD", "Bench"],
-    tools: ["PCMFlash"],
-    pinout: "Не добавлена",
-    instructions: "Уточнить модель блока."
-  },
-
-  // =========================
-  // PEUGEOT / CITROEN
-  // =========================
-
-  {
-    brand: "Peugeot",
-    models: ["206", "207", "308", "408", "3008"],
-    ecu: "Bosch MEV17",
-    manufacturer: "Bosch",
-    processor: "Infineon TriCore",
-    connection: ["OBD", "Bench", "Boot"],
-    tools: ["PCMFlash", "CombiLoader"],
-    pinout: "Не добавлена",
-    instructions: "Уточнить точную модификацию."
-  },
-
-  {
-    brand: "Citroen",
-    models: ["C3", "C4", "C5", "Berlingo"],
-    ecu: "Bosch MEV17",
-    manufacturer: "Bosch",
-    processor: "Infineon TriCore",
-    connection: ["OBD", "Bench", "Boot"],
-    tools: ["PCMFlash", "CombiLoader"],
-    pinout: "Не добавлена",
-    instructions: "Проверить аппаратную версию."
-  },
-
-  // =========================
-  // CHEVROLET
-  // =========================
-
-  {
-    brand: "Chevrolet",
-    models: ["Lacetti", "Aveo", "Cruze", "Niva"],
-    ecu: "Delphi",
-    manufacturer: "Delphi",
-    processor: "Зависит от модели",
     connection: ["OBD", "Bench"],
     tools: ["CombiLoader", "PCMFlash"],
     pinout: "Не добавлена",
-    instructions: "Уточнить номер блока."
+    instructions: "Проверить маркировку ЭБУ."
   },
 
-  // =========================
-  // CHINESE VEHICLES
-  // =========================
+  // ========================================
+  // LADA NIVA
+  // ========================================
 
   {
-    brand: "Chery",
-    models: ["Tiggo", "Arrizo"],
-    ecu: "Bosch ME17",
+    brand: "LADA",
+    models: ["Niva", "Niva Legend", "2121", "21213", "21214"],
+    ecu: "Bosch M7.9.7",
     manufacturer: "Bosch",
-    processor: "Infineon TriCore",
+    processor: "ST10 (уточнить модификацию)",
+    connection: ["OBD", "Bench"],
+    tools: ["CombiLoader"],
+    pinout: "Не добавлена",
+    instructions: "Только для соответствующих инжекторных модификаций."
+  },
+
+  {
+    brand: "LADA",
+    models: ["Niva", "Niva Legend", "21214"],
+    ecu: "М74",
+    manufacturer: "Итэлма",
+    processor: "Требуется уточнение",
+    connection: ["OBD", "Bench"],
+    tools: ["CombiLoader"],
+    pinout: "Не добавлена",
+    instructions: "Проверить номер блока."
+  },
+
+  {
+    brand: "LADA",
+    models: ["Niva Travel", "Chevrolet Niva", "2123"],
+    ecu: "Bosch ME17.9.7",
+    manufacturer: "Bosch",
+    processor: "Infineon TriCore (уточнить модификацию)",
     connection: ["OBD", "Bench", "Boot"],
-    tools: ["PCMFlash", "Flex"],
+    tools: ["CombiLoader", "PCMFlash"],
     pinout: "Не добавлена",
-    instructions: "Уточнить конкретную модификацию."
+    instructions: "Проверить аппаратную версию."
   },
 
-  {
-    brand: "Haval",
-    models: ["H2", "H6", "F7", "Jolion"],
-    ecu: "Bosch MG1",
-    manufacturer: "Bosch",
-    processor: "Зависит от модификации",
-    connection: ["OBD", "Bench"],
-    tools: ["Flex", "Autotuner"],
-    pinout: "Не добавлена",
-    instructions: "Проверить идентификаторы ЭБУ."
-  },
+  // ========================================
+  // LADA 4x4
+  // ========================================
 
   {
-    brand: "Geely",
-    models: ["Atlas", "Coolray", "Emgrand"],
-    ecu: "Bosch MG1",
+    brand: "LADA",
+    models: ["4x4", "Urban", "2131"],
+    ecu: "Bosch ME17.9.7",
     manufacturer: "Bosch",
-    processor: "Зависит от модификации",
-    connection: ["OBD", "Bench"],
-    tools: ["Flex", "Autotuner"],
+    processor: "Infineon TriCore (уточнить модификацию)",
+    connection: ["OBD", "Bench", "Boot"],
+    tools: ["CombiLoader", "PCMFlash"],
     pinout: "Не добавлена",
-    instructions: "Проверить точную модель блока."
+    instructions: "Проверить номер блока и поддерживаемый протокол."
   }
 
 ];
 
-// =========================
+// ==========================================
 // SEARCH FUNCTIONS
-// =========================
+// ==========================================
 
 function normalizeECUText(value) {
     return String(value || "")
@@ -474,12 +482,16 @@ function findECUByName(query) {
     );
 }
 
-// Экспорт для использования в других скриптах
+// ==========================================
+// EXPORT
+// ==========================================
+
 window.FULLCOM_DATABASE = ECU_DATABASE;
 window.findECUByCar = findECUByCar;
 window.findECUByName = findECUByName;
 
 console.log(
-    "FULLCOM ECU DATABASE загружена. Записей:",
+    "FULLCOM AVTOVAZ DATABASE загружена.",
+    "Записей:",
     ECU_DATABASE.length
 );
